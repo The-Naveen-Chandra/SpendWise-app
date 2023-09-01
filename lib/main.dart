@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:spendwise_app/pages/home.dart';
 import 'package:spendwise_app/pages/landing.dart';
 
 void main() {
@@ -14,7 +13,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'SpendWise',
-      // debugShowCheckedModeBanner: false,
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         useMaterial3: true,
       ),

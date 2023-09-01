@@ -15,13 +15,23 @@ class LandingPage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // app name
               Expanded(
-                flex: 2,
+                flex: 1,
+                child: Container(),
+              ),
+              const Expanded(
+                flex: 1,
+                child: Icon(
+                  Icons.monetization_on_rounded,
+                  size: 80,
+                ),
+              ), // app name
+              Expanded(
+                flex: 1,
                 child: Text(
                   "SpendWise",
                   style: GoogleFonts.robotoMono(
-                    fontSize: 60,
+                    fontSize: 50,
                     fontWeight: FontWeight.w500,
                   ),
                 ),
@@ -40,7 +50,7 @@ class LandingPage extends StatelessWidget {
               ),
 
               Expanded(
-                flex: 2,
+                flex: 3,
                 child: Center(
                   child: CustomButton(
                     text: "Get Started !",
