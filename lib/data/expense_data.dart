@@ -1,7 +1,8 @@
+import 'package:flutter/material.dart';
 import 'package:spendwise_app/datetime/date_time_helper.dart';
 import 'package:spendwise_app/models/expense_item.dart';
 
-class ExpenseData {
+class ExpenseData extends ChangeNotifier {
   // list of all expenses
   List<ExpenseItem> overallExpenseList = [];
 
@@ -13,11 +14,17 @@ class ExpenseData {
   // add new expense list
   void addNewExpense(ExpenseItem newExpense) {
     overallExpenseList.add(newExpense);
+
+    // notify listeners
+    notifyListeners();
   }
 
   // delete expense
   void deleteExpense(ExpenseItem expense) {
     overallExpenseList.remove(expense);
+
+    // notify listeners
+    notifyListeners();
   }
 
   // get weekday (mon, tues, etc) from a dataTime object
@@ -71,11 +78,11 @@ class ExpenseData {
       // date (yyyy mm dd) : amountTotalForDay
     };
 
-    for(var expense in overallExpenseList) {
+    for (var expense in overallExpenseList) {
       String date = convertDateTimeToString(expense.dateTime);
       double amount = double.parse(expense.amount);
 
-      if(dailyExpenseSummary.containsKey(date)) {
+      if (dailyExpenseSummary.containsKey(date)) {
         double currentAmount = dailyExpenseSummary[date]!;
         currentAmount += amount;
         dailyExpenseSummary[date] = currentAmount;
