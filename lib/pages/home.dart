@@ -3,6 +3,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:spendwise_app/components/custom_alert_button.dart';
 import 'package:spendwise_app/components/custom_textfield.dart';
+import 'package:spendwise_app/components/expense_summary.dart';
+import 'package:spendwise_app/components/expense_tile.dart';
 import 'package:spendwise_app/data/expense_data.dart';
 import 'package:spendwise_app/models/expense_item.dart';
 
@@ -132,19 +134,27 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
         ),
-        body: ListView.builder(
-          itemCount: value.getAllExpenseList().length,
-          itemBuilder: (context, index) => ListTile(
-            title: Text(
-              value.getAllExpenseList()[index].name,
+        body: ListView(
+          children: [
+            // weekly summary
+            ExpenseSummary(
+              startOfWeek: value.startOfWeekDate(),
             ),
-            subtitle: Text(
-              value.getAllExpenseList()[index].dateTime.toString(),
+
+            // expense list
+            ListView.builder(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: value.getAllExpenseList().length,
+              itemBuilder: (context, index) =>
+                  // Expense tile
+                  ExpenseTile(
+                name: value.getAllExpenseList()[index].name,
+                amount: value.getAllExpenseList()[index].amount,
+                dateTime: value.getAllExpenseList()[index].dateTime,
+              ),
             ),
-            trailing: Text(
-              "₹${value.getAllExpenseList()[index].amount}",
-            ),
-          ),
+          ],
         ),
       ),
     );
