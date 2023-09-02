@@ -6,15 +6,19 @@ class CustomTextField extends StatelessWidget {
     super.key,
     required this.controller,
     required this.hintText,
+    this.isPrefixIcon = false,
+    this.isNumber = false,
   });
 
   final TextEditingController controller;
   final String hintText;
+  final bool isPrefixIcon;
+  final bool isNumber;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10),
+      // padding: const EdgeInsets.only(left: 10),
       decoration: BoxDecoration(
         color: Colors.white,
         border: Border.all(
@@ -30,8 +34,18 @@ class CustomTextField extends StatelessWidget {
       ),
       child: TextField(
         controller: controller,
+        showCursor: false,
+        keyboardType: isNumber ? TextInputType.number : TextInputType.text,
+        style: GoogleFonts.robotoMono(),
         decoration: InputDecoration(
-            hintText: hintText, hintStyle: GoogleFonts.robotoMono()),
+          prefixIcon: isPrefixIcon ?  Icon(
+            Icons.currency_rupee,
+            size: 20,
+            color: Colors.grey[600],
+          ) : const SizedBox(),
+          hintText: hintText,
+          hintStyle: GoogleFonts.robotoMono(),
+        ),
       ),
     );
   }

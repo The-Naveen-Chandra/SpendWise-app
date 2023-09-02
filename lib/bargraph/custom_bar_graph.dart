@@ -1,5 +1,6 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:spendwise_app/bargraph/bar_data.dart';
 
 class CustomBarGraph extends StatelessWidget {
@@ -43,6 +44,24 @@ class CustomBarGraph extends StatelessWidget {
       BarChartData(
         maxY: maxY,
         minY: 0,
+        titlesData: const FlTitlesData(
+          show: true,
+          topTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
+          leftTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
+          rightTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
+          bottomTitles: AxisTitles(
+            sideTitles: SideTitles(
+              showTitles: true,
+              getTitlesWidget: getTitleWidget,
+            ),
+          ),
+        ),
+        gridData: const FlGridData(
+          show: false,
+        ),
+        borderData: FlBorderData(
+          show: false,
+        ),
         barGroups: customBarData.barData
             .map(
               (data) => BarChartGroupData(
@@ -50,6 +69,14 @@ class CustomBarGraph extends StatelessWidget {
                 barRods: [
                   BarChartRodData(
                     toY: data.y,
+                    color: Colors.grey[800],
+                    width: 25,
+                    borderRadius: BorderRadius.circular(4),
+                    backDrawRodData: BackgroundBarChartRodData(
+                      show: true,
+                      toY: maxY,
+                      color: Colors.grey[200],
+                    ),
                   ),
                 ],
               ),
@@ -58,4 +85,42 @@ class CustomBarGraph extends StatelessWidget {
       ),
     );
   }
+}
+
+Widget getTitleWidget(double value, TitleMeta meta) {
+  var style = GoogleFonts.robotoMono(
+    color: Colors.grey[700],
+    fontWeight: FontWeight.w700,
+    fontSize: 14,
+  );
+  Widget text;
+  switch (value.toInt()) {
+    case 0:
+      text = Text('S', style: style);
+      break;
+    case 1:
+      text = Text('M', style: style);
+      break;
+    case 2:
+      text = Text('T', style: style);
+      break;
+    case 3:
+      text = Text('W', style: style);
+      break;
+    case 4:
+      text = Text('T', style: style);
+      break;
+    case 5:
+      text = Text('F', style: style);
+      break;
+    case 6:
+      text = Text('S', style: style);
+      break;
+    default:
+      text = Text('', style: style);
+  }
+  return SideTitleWidget(
+    axisSide: meta.axisSide,
+    child: text,
+  );
 }

@@ -20,7 +20,7 @@ class ExpenseTile extends StatelessWidget {
         '${dateTime.day} / ${dateTime.month} / ${dateTime.year}',
       ),
       trailing: Text(
-        "₹$amount",
+        "₹$amount.00",
       ),
     );
   }

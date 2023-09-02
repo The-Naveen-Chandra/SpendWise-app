@@ -19,11 +19,19 @@ class LandingPage extends StatelessWidget {
                 flex: 1,
                 child: Container(),
               ),
-              const Expanded(
+              Expanded(
                 flex: 1,
-                child: Icon(
-                  Icons.monetization_on_rounded,
-                  size: 80,
+                child: Container(
+                  padding: const EdgeInsets.all(14),
+                  decoration: BoxDecoration(
+                    color: Colors.black,
+                    borderRadius: BorderRadius.circular(50),
+                  ),
+                  child: const Icon(
+                    Icons.currency_rupee_rounded,
+                    size: 70,
+                    color: Colors.white,
+                  ),
                 ),
               ), // app name
               Expanded(
@@ -31,7 +39,7 @@ class LandingPage extends StatelessWidget {
                 child: Text(
                   "SpendWise",
                   style: GoogleFonts.robotoMono(
-                    fontSize: 50,
+                    fontSize: 60,
                     fontWeight: FontWeight.w500,
                   ),
                 ),
@@ -39,7 +47,7 @@ class LandingPage extends StatelessWidget {
 
               // small description about the app
               Expanded(
-                flex: 2,
+                flex: 3,
                 child: Text(
                   "Your's personal expense tracking app.",
                   style: GoogleFonts.robotoMono(
@@ -50,7 +58,7 @@ class LandingPage extends StatelessWidget {
               ),
 
               Expanded(
-                flex: 3,
+                flex: 2,
                 child: Center(
                   child: CustomButton(
                     text: "Get Started !",

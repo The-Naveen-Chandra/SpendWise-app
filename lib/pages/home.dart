@@ -78,6 +78,8 @@ class _HomePageState extends State<HomePage> {
             CustomTextField(
               controller: newExpenseAmountController,
               hintText: "Expense amount",
+              isNumber: true,
+              isPrefixIcon: true,
             ),
           ],
         ),
@@ -139,6 +141,10 @@ class _HomePageState extends State<HomePage> {
             // weekly summary
             ExpenseSummary(
               startOfWeek: value.startOfWeekDate(),
+            ),
+
+            const SizedBox(
+              height: 20,
             ),
 
             // expense list
