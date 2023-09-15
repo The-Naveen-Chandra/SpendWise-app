@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:spendwise_app/data/hive_database.dart';
 import 'package:spendwise_app/datetime/date_time_helper.dart';
 import 'package:spendwise_app/models/expense_item.dart';
 
@@ -11,12 +12,25 @@ class ExpenseData extends ChangeNotifier {
     return overallExpenseList;
   }
 
+  // prepare data to display
+  final db = HiveDataBase();
+
+  void prepareData() {
+    // if there exists data, get it
+    if (db.readData().isNotEmpty) {
+      overallExpenseList = db.readData();
+    }
+  }
+
   // add new expense list
   void addNewExpense(ExpenseItem newExpense) {
     overallExpenseList.add(newExpense);
 
     // notify listeners
     notifyListeners();
+
+    // save the data
+    db.saveData(overallExpenseList);
   }
 
   // delete expense
@@ -25,6 +39,9 @@ class ExpenseData extends ChangeNotifier {
 
     // notify listeners
     notifyListeners();
+
+    // save the data
+    db.saveData(overallExpenseList);
   }
 
   // get weekday (mon, tues, etc) from a dataTime object
@@ -80,6 +97,7 @@ class ExpenseData extends ChangeNotifier {
 
     for (var expense in overallExpenseList) {
       String date = convertDateTimeToString(expense.dateTime);
+
       double amount = double.parse(expense.amount);
 
       if (dailyExpenseSummary.containsKey(date)) {
