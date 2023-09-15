@@ -19,7 +19,7 @@ class ExpenseTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10.0),
+      padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
       child: Slidable(
         endActionPane: ActionPane(
           motion: const StretchMotion(),
@@ -33,16 +33,31 @@ class ExpenseTile extends StatelessWidget {
             ),
           ],
         ),
-        child: ListTile(
-          title: Text(name),
-          subtitle: Text(
-            '${dateTime.day} / ${dateTime.month} / ${dateTime.year}',
+        child: Container(
+          decoration: BoxDecoration(
+            color: Colors.white60,
+            border: Border.all(
+              color: Colors.black,
+              width: 2,
+            ),
           ),
-          trailing: Text("₹$amount.00",
-              style: GoogleFonts.lato(
+          child: ListTile(
+            title: Text(
+              name,
+              style: GoogleFonts.robotoMono(fontWeight: FontWeight.w500),
+            ),
+            subtitle: Text(
+              '${dateTime.day} / ${dateTime.month} / ${dateTime.year}',
+              style: GoogleFonts.robotoMono(),
+            ),
+            trailing: Text(
+              "₹$amount.00",
+              style: GoogleFonts.robotoMono(
                 fontSize: 15,
-                fontWeight: FontWeight.bold,
-              )),
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ),
         ),
       ),
     );
