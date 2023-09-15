@@ -30,19 +30,29 @@ class _HomePageState extends State<HomePage> {
 
   // save expense function
   void saveExpense() {
-    // Create expense item
-    ExpenseItem newExpense = ExpenseItem(
-      name: newExpenseNameController.text,
-      amount: newExpenseAmountController.text,
-      dateTime: DateTime.now(),
-    );
+    // only save if both fields are filled
+    if (newExpenseNameController.text.isNotEmpty &&
+        newExpenseAmountController.text.isNotEmpty) {
+      // Create expense item
+      ExpenseItem newExpense = ExpenseItem(
+        name: newExpenseNameController.text,
+        amount: newExpenseAmountController.text,
+        dateTime: DateTime.now(),
+      );
 
-    // add the new expense
-    Provider.of<ExpenseData>(context, listen: false).addNewExpense(newExpense);
+      // add the new expense
+      Provider.of<ExpenseData>(context, listen: false)
+          .addNewExpense(newExpense);
+    }
 
     // pop the context
     Navigator.pop(context);
     clearController();
+  }
+
+  // delete expense function
+  void deleteExpense(ExpenseItem expense) {
+    Provider.of<ExpenseData>(context, listen: false).deleteExpense(expense);
   }
 
   // cancel expense function
@@ -119,6 +129,37 @@ class _HomePageState extends State<HomePage> {
     return Consumer<ExpenseData>(
       builder: (context, value, child) => Scaffold(
         backgroundColor: Colors.grey[300],
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          title: Row(
+            children: [
+              const SizedBox(
+                width: 5,
+              ),
+              Container(
+                padding: const EdgeInsets.all(4),
+                decoration: BoxDecoration(
+                  color: Colors.black,
+                  borderRadius: BorderRadius.circular(50),
+                ),
+                child: const Icon(
+                  Icons.currency_rupee_rounded,
+                  color: Colors.white,
+                ),
+              ),
+              const SizedBox(
+                width: 10,
+              ),
+              Text(
+                "SpendWise",
+                style: GoogleFonts.robotoMono(
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ],
+          ),
+          centerTitle: true,
+        ),
         floatingActionButton: Container(
           decoration: BoxDecoration(
             border: Border.all(
@@ -166,6 +207,8 @@ class _HomePageState extends State<HomePage> {
                 name: value.getAllExpenseList()[index].name,
                 amount: value.getAllExpenseList()[index].amount,
                 dateTime: value.getAllExpenseList()[index].dateTime,
+                deleteTapped: (p0) =>
+                    deleteExpense(value.getAllExpenseList()[index]),
               ),
             ),
           ],
